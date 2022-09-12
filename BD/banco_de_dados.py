@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, Column, String, Integer, Date
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from logins import login, senha
+from .logins import login, senha
 
 engine = create_engine(
     f'mysql+pymysql://{login}:{senha}@localhost:3306/falecidos')
