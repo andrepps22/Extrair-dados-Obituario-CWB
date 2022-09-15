@@ -1,8 +1,11 @@
+############################# IMPORTS ##########################################
 from .tratar_data_e_idade import formatar_data, formatar_idade
 from BD.banco_de_dados import Falecidos, session
 from datetime import datetime
 from sqlalchemy.future import select
+################################################################################
 
+# VARIAVEIS
 data_now = datetime.now()
 lista_dados = []
 temp = {}
@@ -54,7 +57,7 @@ def inserir_dados():
             ))
         result = query.scalars().all()
 
-        # Se o resultado da buscar troucer valores(True) não insere nenhum dados pois está repitido, caso não traga nenhum resultado(False) insere os dados na instancia do banco.
+        # Se o resultado da buscar trouxer valores(True) não insere nenhum dados pois está repitido, caso não traga nenhum resultado(False) insere os dados na instancia do banco.
         if result:
             session.commit()
             continue
@@ -68,7 +71,7 @@ def inserir_dados():
             session.commit()
             cont += 1
 
-    session.close()
+    session.close()  # Encerrando a sessão
 
     print(f'Foram inseridos {cont} registros')
 

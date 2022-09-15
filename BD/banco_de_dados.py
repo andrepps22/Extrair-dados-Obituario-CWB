@@ -1,11 +1,15 @@
+############################# IMPORTS ##########################################
 from sqlalchemy import create_engine, Column, String, Integer, Date
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from .logins import login, senha
+################################################################################
 
+# Cria a estrutura para conectar ao banco de dados que é passado no começo da string seguido pela biblioteca que auxilia nessa conexão
 engine = create_engine(
     f'mysql+pymysql://{login}:{senha}@localhost:3306/falecidos')
 
+# Cria a sessão de conexão com banco de dados (usuario deve conter permissões para essas interações)
 Session = sessionmaker(
     bind=engine,
     autocommit=False,
@@ -13,11 +17,14 @@ Session = sessionmaker(
     expire_on_commit=False
 )
 
+# Instanciando a sessão de conexão
 session = Session()
 
+# pega as confiurações do sqlachemy no declaritive_base e joga dentro da variavel Base para ficar mais fácil
 Base = declarative_base()
 
 
+# Classe que vai herdar do declarative Base e vai criar as tabelas com os campos com cada caristica necessaria
 class Falecidos(Base):
     __tablename__ = 'falecidos'
 
@@ -37,5 +44,6 @@ class Falecidos(Base):
     data_do_sepultamento = Column(Date)
     funeraria = Column(String(250))
 
+    # Representação do Objeto atraves do campo nome.
     def __repr__(self) -> str:
         return f'{self.nome}'
