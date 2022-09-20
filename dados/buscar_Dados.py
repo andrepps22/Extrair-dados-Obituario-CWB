@@ -27,3 +27,7 @@ def buscar_dados():
     # Criar o arquivo txt dos dados colhidos
     with open('falecidos.txt', 'w+') as file:
         file.write(str(texto))
+
+
+if __name__ == '__main__':
+    buscar_dados()

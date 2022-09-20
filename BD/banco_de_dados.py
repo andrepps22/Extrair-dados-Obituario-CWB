@@ -31,7 +31,7 @@ Base = declarative_base()
 
 # Classe que vai herdar do declarative Base e vai criar as tabelas com os campos com cada caristica necessaria
 class Falecidos(Base):
-    __tablename__ = 'dw_falecidos'
+    __tablename__ = 'dw_falecidos_cwb'
 
     # Necessario para criar o autoincremente do Oracle
     id_seq = Sequence('id_seq', start=1, increment=1)

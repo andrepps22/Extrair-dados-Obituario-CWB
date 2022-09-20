@@ -59,7 +59,6 @@ def inserir_dados():
 
         # Se o resultado da buscar trouxer valores(True) não insere nenhum dados pois está repitido, caso não traga nenhum resultado(False) insere os dados na instancia do banco.
         if result:
-            session.commit()
             continue
         else:
             # Instacia que vai fazer a inserção dos dados no banco de dados
