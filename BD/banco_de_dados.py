@@ -1,13 +1,18 @@
 ############################# IMPORTS ##########################################
-from sqlalchemy import create_engine, Column, String, Integer, Date
+from sqlalchemy import create_engine, Column, String, Integer, Date, Sequence
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from .logins import login, senha
+import cx_Oracle
 ################################################################################
 
 # Cria a estrutura para conectar ao banco de dados que é passado no começo da string seguido pela biblioteca que auxilia nessa conexão
+
+dnsStr = cx_Oracle.makedsn('fs-rac-scan', '1521', 'PDB')
+dnsStr = dnsStr.replace('SID', 'SERVICE_NAME')
+
 engine = create_engine(
-    f'mysql+pymysql://{login}:{senha}@localhost:3306/falecidos')
+    f'oracle+cx_oracle://{login}:{senha}@{dnsStr}')
 
 # Cria a sessão de conexão com banco de dados (usuario deve conter permissões para essas interações)
 Session = sessionmaker(
@@ -26,9 +31,11 @@ Base = declarative_base()
 
 # Classe que vai herdar do declarative Base e vai criar as tabelas com os campos com cada caristica necessaria
 class Falecidos(Base):
-    __tablename__ = 'falecidos'
+    __tablename__ = 'dw_falecidos'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
+    # Necessario para criar o autoincremente do Oracle
+    id_seq = Sequence('id_seq', start=1, increment=1)
+    id = Column(Integer, id_seq,  primary_key=True,)
     data_insercao = Column(String(250))
     nome = Column(String(250))
     data_do_falecimento = Column(Date)
